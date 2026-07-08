@@ -25,12 +25,16 @@ def main():
         p3 = 1
     elif s1 == "CNG":
         p3 = 2
+    elif s1 == "Electric":
+        p3 = 3
     
     s2=st.selectbox("Select the seller type:", ["Individual", "Dealer", "Trustmark Dealer"])
     if s2 == "Individual":
         p4 = 0
     elif s2 == "Dealer":
         p4 = 1
+    elif s2 == "Trustmark Dealer":
+        p4 = 2
    
     s3=st.selectbox("Select the transmission type:", ["Manual", "Automatic"])
     if s3 == "Manual":
@@ -53,8 +57,11 @@ def main():
     }],index=[0])
 
     if st.button("Predict"):
-        pred = model.predict(data_now)
-        st.success("you can sell your car at {:.2f} lakhs".format(pred[0]))
+        try:
+            pred = model.predict(data_now)
+            st.success("you can sell your car at {:.2f} lakhs".format(pred[0]))
+        except Exception as e:
+            st.error("Something went wrong while predicting: {}".format(e))
 
 
 
